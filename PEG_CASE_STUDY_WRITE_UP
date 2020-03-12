@@ -1,0 +1,66 @@
+-----------------  CASE STUDY A ------------------------------------------------------
+
+Refer to DeliquencyBuckets.py
+
+-----------------  CASE STUDY B ------------------------------------------------------
+
+1. Implement a slowly changing dimension - row versioning with active dates, active record will have end_date as null, old active record will have a set end_date
+	For any record insert , check if the customer ID exists, if it does, check if any of the values is different from what is currently available in the table, if not create a new record
+	
+	(refer to ETL.py)
+	
+	-- ACTIVE
+	SELECT *
+	FROM customers WHERE end_date is null;
+
+	-- SHOW ACTIVE & HISTORICAL 
+	SELECT *
+	FROM customers WHERE customerId = 125261
+	ORDER BY end_date DESC;
+
+2. Use distributed processing technologies like Spark, which give the ability to run jobs in a cluster. Data is split into chucks and distributed across nodes for processing, once complete results are aggregated and final results shared.
+   Distributed technologies allow for scalability, you are able to specify how many nodes, cores , executors a certain job should be can use depending on your requirement.
+   Cloud services with provisioning on demand & scale on demand can cater for such needs like the s3 different tiers for storage, AWS EMR , 
+  
+   If we must use RDBMS
+	- Cloud Datawahouse like AWS Redshift,Snowflake offer some scalable solutionsn withe leader and compute nodes provisioned on demand
+    - Put optimal processing procedures in place, like indexing, leverage RDBMS advanced features like materialized views, bulk loading
+    - Create layers with different granularity (monthly, customer,annual ), and optimise retention to the business reporting needs. ie less retention period for the least granular
+   
+   
+   
+   
+------------------ CASE STUDY C -------------------------------------------------------
+
+SELECT 
+a.ContractId,
+a.FirstName,
+a.LastName,
+a.Date_of_Sale,
+b.Agent_Location_Id,
+CONCAT(c.FisrtName,' ',c.`Last Name`) Sale_Location
+FROM customers_sales_info a 
+LEFT JOIN agent_location_sales b ON a.contractId = b.ContractId
+LEFT JOIN location_info c ON b.Agent_Location_Id = c.LocationId
+
+There's no link between agent and location , there's not locationId on the agent Table -- unable to determine that relationshi()
+
+
+------------------ CASE STUDY D ------------
+ 
+Sales Agents Retention
+
+1. Targets could be high and they are not making enough money
+I would look into proposing a revision in the commission structure, pay more commission for high quality customers (pay more for those paying back or less for those not paying back)
+  
+2. Share perfomance regularly with the sales agents like dashboards at individual & suprervisory level
+
+3. Have regular sessions to determine information needs
+	- sales left to hit targets
+	- sales so far made
+	- commission
+
+4. Compare perfomance of those who have received training & those that hsve not 
+Seasonality
+Find out other economic activities are carried out in those areas like traders, local importers and exporters and see how PEG can partner / offer services to these line of businesses
+ 
